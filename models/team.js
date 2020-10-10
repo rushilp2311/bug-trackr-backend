@@ -6,6 +6,9 @@ const teamSchema = new mongoose.Schema({
   users: {
     type: Array,
   },
+  bugs: {
+    type: Array,
+  },
 });
 
 async function addUserToTeam(id, user) {
