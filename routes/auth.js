@@ -21,6 +21,12 @@ router.post("/", async (req, res) => {
   res.send(token);
 });
 
+router.post("/updateToken", async (req, res) => {
+  let user = await User.findOne({ email: req.body.email });
+  const token = user.generateAuthToken();
+  res.send(token);
+});
+
 function validate(req) {
   const schema = {
     email: Joi.string().min(5).max(255).required().email(),

@@ -1,7 +1,7 @@
 const auth = require("../middleware/auth");
 const _ = require("lodash");
 const { User, validate } = require("../models/user");
-const { AddUserToTeam } = require("../models/team");
+const { Team } = require("../models/team");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const express = require("express");
@@ -33,7 +33,7 @@ router.post("/", async (req, res) => {
 router.post("/addtoteam", async (req, res) => {
   let user = await User.findOne({ email: req.body.currentUser.email });
   user.team = req.body.team;
-  const result = AddUserToTeam(user.team, user);
+  const result = await Team.findOne({ id: +req.body.team });
   if (!result) res.status(404).send("Team Not Found.");
   await user.save();
   const token = user.generateAuthToken();
