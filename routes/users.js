@@ -5,6 +5,7 @@ const { Team } = require("../models/team");
 const bcrypt = require("bcrypt");
 const mongoose = require("mongoose");
 const express = require("express");
+
 const router = express.Router();
 
 router.get("/me", auth, async (req, res) => {
@@ -41,6 +42,15 @@ router.post("/addtoteam", async (req, res) => {
     .header("x-auth-token", token)
     .header("access-control-expose-headers", "x-auth-token")
     .send(_.pick(user, ["_id", "name", "email", "team"]));
+});
+
+router.get("/getallusersbyteamid/:id", async (req, res) => {
+  let users = await User.find({ team: +req.params.id }).select({
+    name: 1,
+    email: 1,
+  });
+  console.log(users);
+  res.send(users);
 });
 
 module.exports = router;
