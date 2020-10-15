@@ -49,7 +49,6 @@ router.get("/getallusersbyteamid/:id", async (req, res) => {
     name: 1,
     email: 1,
   });
-  console.log(users);
   res.send(users);
 });
 

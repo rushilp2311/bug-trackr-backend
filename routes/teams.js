@@ -17,7 +17,7 @@ router.post("/", async (req, res) => {
 router.get("/:id", async (req, res) => {
   let team = await Team.findOne({ id: +req.params.id });
   if (!team) return res.status(404).send("Team Not Found");
-  
+
   res.send(_.pick(team, ["id", "name", "bugs"]));
 });
 
