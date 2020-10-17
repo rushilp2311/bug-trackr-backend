@@ -13,9 +13,10 @@ router.post("/", async (req, res) => {
     createdBy: { id: user._id, name: user.name },
   };
   let currentBug = team.bugs.find(obj => obj._id == req.body.bugid);
-  currentBug.comments.push(comment);
-  await team.save();
-  return team;
+  currentBug.comments = [...currentBug.comments, comment];
+  team.save();
+
+  res.send(team);
 });
 
 module.exports = router;

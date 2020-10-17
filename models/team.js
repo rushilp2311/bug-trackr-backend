@@ -1,10 +1,9 @@
 const mongoose = require("mongoose");
 
-
 const commentSchema = new mongoose.Schema({
   comment: String,
+  createdBy: Object,
   date: { type: Date, default: Date.now },
-  createBy: Object,
 });
 const bugSchema = new mongoose.Schema({
   title: String,
