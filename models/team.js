@@ -1,12 +1,24 @@
 const mongoose = require("mongoose");
-const { bugSchema } = require("./bug");
+
+
+const commentSchema = new mongoose.Schema({
+  comment: String,
+  date: { type: Date, default: Date.now },
+  createBy: Object,
+});
+const bugSchema = new mongoose.Schema({
+  title: String,
+  description: String,
+  createdBy: Object,
+  date: { type: Date, default: Date.now },
+  comments: [commentSchema],
+  isOpen: Boolean,
+});
 
 const teamSchema = new mongoose.Schema({
   id: Number,
   name: { type: String, required: true, minlength: 5 },
-  bugs: {
-    type: [bugSchema],
-  },
+  bugs: [bugSchema],
 });
 
 const Team = mongoose.model("Team", teamSchema);
