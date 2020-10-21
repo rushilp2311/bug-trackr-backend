@@ -1,4 +1,5 @@
 const express = require("express");
+const _ = require("lodash");
 const { Team } = require("../models/team");
 const { User } = require("../models/user");
 const router = express.Router();
@@ -15,6 +16,19 @@ router.post("/", async (req, res) => {
     isOpen: req.body.isOpen,
   };
   team.bugs.push(bug);
+  await team.save();
+  res.send(team);
+});
+
+router.delete("/", async (req, res) => { 
+  let team = await Team.findOne({ id: req.headers.teamid });
+  //if (!team) return res.status(400).send(error.details[0].message);  
+  for (let i = 0; i < team.bugs.length; i++) {
+    if (team.bugs[i]._id == req.headers.bugid) {     
+      team.bugs.splice(i, 1);
+      break;
+    }
+  }
   await team.save();
   res.send(team);
 });
