@@ -20,4 +20,21 @@ router.post("/", async (req, res) => {
   res.send(team);
 });
 
+router.delete("/", async (req, res) => { 
+
+  let team = await Team.findOne({ id: req.headers.teamid });
+  if (!team) return res.status(400).send(error.details[0].message);
+  let currentBug = team.bugs.find(obj => obj._id == req.headers.bugid);
+ // let currentComment = currentBug.comments.find(comment => comment._id == req.body.commentid);
+  for (let i = 0; i < currentBug.comments.length; i++) {
+    if (currentBug.comments[i]._id == req.headers.commentid) {     
+      currentBug.comments.splice(i, 1);
+      break;
+    }
+  }
+  team.save();
+  res.send(team);
+});
+
+
 module.exports = router;
