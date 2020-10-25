@@ -1,10 +1,10 @@
-const express = require("express");
-const _ = require("lodash");
-const { Team } = require("../models/team");
-const { User } = require("../models/user");
+const express = require('express');
+const _ = require('lodash');
+const { Team } = require('../models/team');
+const { User } = require('../models/user');
 const router = express.Router();
 
-router.post("/", async (req, res) => {
+router.post('/', async (req, res) => {
   const user = await User.findOne({ email: req.body.email });
   if (!user) return res.status(400).send(error.details[0].message);
   let team = await Team.findOne({ id: req.body.teamid });
@@ -20,10 +20,10 @@ router.post("/", async (req, res) => {
   res.send(team);
 });
 
-router.delete("/", async (req, res) => { 
+router.delete('/', async (req, res) => {
   let team = await Team.findOne({ id: req.headers.teamid });
   for (let i = 0; i < team.bugs.length; i++) {
-    if (team.bugs[i]._id == req.headers.bugid) {     
+    if (team.bugs[i]._id == req.headers.bugid) {
       team.bugs.splice(i, 1);
       break;
     }
@@ -32,13 +32,12 @@ router.delete("/", async (req, res) => {
   res.send(team);
 });
 
-router.post("/changeBugStatus", async (req, res) => { 
+router.post('/changeBugStatus', async (req, res) => {
   let team = await Team.findOne({ id: req.body.teamid });
-  let currentBug = team.bugs.find(obj => obj._id == req.body.bugid);
+  let currentBug = team.bugs.find((obj) => obj._id == req.body.bugid);
   currentBug.isOpen = !currentBug.isOpen;
   team.save();
   res.send(team);
-})
-
+});
 
 module.exports = router;

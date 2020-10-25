@@ -1,4 +1,4 @@
-const mongoose = require("mongoose");
+const mongoose = require('mongoose');
 
 const commentSchema = new mongoose.Schema({
   comment: String,
@@ -20,6 +20,6 @@ const teamSchema = new mongoose.Schema({
   bugs: [bugSchema],
 });
 
-const Team = mongoose.model("Team", teamSchema);
+const Team = mongoose.model('Team', teamSchema);
 
 exports.Team = Team;

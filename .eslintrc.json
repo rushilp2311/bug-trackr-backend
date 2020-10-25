@@ -1,0 +1,23 @@
+{
+    "env": {
+        "browser": true,
+        "commonjs": true,
+        "es2020": true
+    },
+    "extends": [
+        "airbnb", "prettier"
+    ],
+    "plugins": [
+        "prettier"
+    ],
+    "parserOptions": {
+        "ecmaVersion": 12
+    },
+    "rules": {
+        "no-unused-vars":"warn",
+        "no-console":"off",
+        "prettier/prettier":"error",
+        "func-names":"off",
+        "object-shorthand":"off"
+    }
+}
