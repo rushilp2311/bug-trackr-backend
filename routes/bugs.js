@@ -22,7 +22,6 @@ router.post("/", async (req, res) => {
 
 router.delete("/", async (req, res) => { 
   let team = await Team.findOne({ id: req.headers.teamid });
-  //if (!team) return res.status(400).send(error.details[0].message);  
   for (let i = 0; i < team.bugs.length; i++) {
     if (team.bugs[i]._id == req.headers.bugid) {     
       team.bugs.splice(i, 1);
@@ -32,5 +31,14 @@ router.delete("/", async (req, res) => {
   await team.save();
   res.send(team);
 });
+
+router.post("/changeBugStatus", async (req, res) => { 
+  let team = await Team.findOne({ id: req.body.teamid });
+  let currentBug = team.bugs.find(obj => obj._id == req.body.bugid);
+  currentBug.isOpen = !currentBug.isOpen;
+  team.save();
+  res.send(team);
+})
+
 
 module.exports = router;
