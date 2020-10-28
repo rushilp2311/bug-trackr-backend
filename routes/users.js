@@ -34,14 +34,19 @@ router.post('/', async (req, res) => {
 router.post('/addtoteam', async (req, res) => {
   let user = await User.findOne({ email: req.body.currentUser.email });
   user.team = req.body.team;
-  const result = await Team.findOne({ id: +req.body.team });
-  if (!result) res.status(404).send('Team Not Found.');
   await user.save();
   const token = user.generateAuthToken();
   res
     .header('x-auth-token', token)
     .header('access-control-expose-headers', 'x-auth-token')
     .send(_.pick(user, ['_id', 'name', 'email', 'team']));
+});
+
+router.post('/leaveteam', async (req, res) => {
+  let user = await User.findOne({ email: req.body.email });
+  user.team = req.body.team;
+  await user.save();
+  res.send(user);
 });
 
 router.get('/getallusersbyteamid/:id', async (req, res) => {
