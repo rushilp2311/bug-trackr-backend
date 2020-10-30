@@ -20,7 +20,7 @@ if (!config.get('jwtPrivateKey')) {
 
 mongoose
   .connect(
-    'mongodb+srv://rushilp2311:aarya2006@cluster0.trukh.mongodb.net/bug-trackr?retryWrites=true&w=majority',
+    'mongodb+srv://rushilp2311:rushil123@cluster0.trukh.mongodb.net/bug-trackr?retryWrites=true&w=majority',
     {
       useNewUrlParser: true,
       useUnifiedTopology: true,
