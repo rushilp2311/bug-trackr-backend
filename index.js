@@ -10,6 +10,8 @@ const comment = require('./routes/comments');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+
+require('./startup/prod')(app);
 app.use(cors());
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined.');
