@@ -19,11 +19,14 @@ if (!config.get('jwtPrivateKey')) {
 }
 
 mongoose
-  .connect('mongodb://localhost/bug-trackr', {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-  })
+  .connect(
+    'mongodb+srv://rushilp2311:aarya2006@cluster0.trukh.mongodb.net/bug-trackr?retryWrites=true&w=majority',
+    {
+      useNewUrlParser: true,
+      useUnifiedTopology: true,
+      useCreateIndex: true,
+    }
+  )
   .then(() => console.log('Connected to MongoDB...'))
   .catch((err) => console.error('Could not connect to MongoDB....'));
 
