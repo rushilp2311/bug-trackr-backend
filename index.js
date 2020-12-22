@@ -1,15 +1,17 @@
+require('express-async-errors');
 const config = require('config');
 const Joi = require('joi');
-Joi.objectId = require('joi-objectid')(Joi);
 const mongoose = require('mongoose');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const team = require('./routes/teams');
 const bug = require('./routes/bugs');
 const comment = require('./routes/comments');
+const error = require('./middleware/error');
 const express = require('express');
 const app = express();
 const cors = require('cors');
+Joi.objectId = require('joi-objectid')(Joi);
 
 require('./startup/prod')(app);
 app.use(cors());
@@ -36,5 +38,8 @@ app.use('/api/auth', auth);
 app.use('/api/team', team);
 app.use('/api/bug', bug);
 app.use('/api/comment', comment);
+
+app.use(error);
+
 const port = process.env.PORT || 3001;
 app.listen(port, () => console.log(`Listening on port ${port}...`));

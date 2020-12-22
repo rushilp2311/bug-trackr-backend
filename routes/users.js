@@ -5,7 +5,6 @@ const { Team } = require('../models/team');
 const bcrypt = require('bcrypt');
 const mongoose = require('mongoose');
 const express = require('express');
-
 const router = express.Router();
 
 router.get('/me', auth, async (req, res) => {
