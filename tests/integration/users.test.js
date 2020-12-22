@@ -25,4 +25,12 @@ describe('/api/users', () => {
       expect(res.status).toBe(200);
     });
   });
+  describe('POST /', () => {
+    it('should return 200 if user info is correct and gets registered', async () => {
+      const res = await request(server)
+        .post('/api/users')
+        .send({ name: 'user1', email: 'user1@gmail.com', password: '123456' });
+      expect(res.status).toBe(200);
+    });
+  });
 });
