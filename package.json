@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
+    "test": "jest --watchAll --verbose --testEnvironment=node",
     "start": "node index.js"
   },
   "engines": {
@@ -40,6 +40,12 @@
     "lodash": "^4.17.20",
     "mongoose": "^5.10.7",
     "nodemon": "^2.0.5",
-    "prettier": "^2.1.2"
+    "prettier": "^2.1.2",
+    "winston": "^3.3.3",
+    "winston-mongodb": "^5.0.5"
+  },
+  "devDependencies": {
+    "jest": "^26.6.3",
+    "supertest": "^6.0.1"
   }
 }

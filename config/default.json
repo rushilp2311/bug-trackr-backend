@@ -1,3 +1,4 @@
 {
-  "jwtPrivateKey": ""
+  "jwtPrivateKey": "",
+  "db": "mongodb+srv://rushilp2311:rushil123@cluster0.trukh.mongodb.net/bug-trackr?retryWrites=true&w=majority"
 }

@@ -30,6 +30,7 @@ router.post('/', async (req, res) => {
     .header('access-control-expose-headers', 'x-auth-token')
     .send(_.pick(user, ['_id', 'name', 'email']));
 });
+
 router.post('/addtoteam', async (req, res) => {
   let user = await User.findOne({ email: req.body.currentUser.email });
   user.team = req.body.team;

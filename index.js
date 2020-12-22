@@ -1,5 +1,6 @@
 require('express-async-errors');
 const config = require('config');
+require('./startup/db')();
 const Joi = require('joi');
 const mongoose = require('mongoose');
 const users = require('./routes/users');
@@ -12,25 +13,13 @@ const express = require('express');
 const app = express();
 const cors = require('cors');
 Joi.objectId = require('joi-objectid')(Joi);
-
 require('./startup/prod')(app);
 app.use(cors());
+
 if (!config.get('jwtPrivateKey')) {
   console.error('FATAL ERROR: jwtPrivateKey is not defined.');
   process.exit(1);
 }
-
-mongoose
-  .connect(
-    'mongodb+srv://rushilp2311:rushil123@cluster0.trukh.mongodb.net/bug-trackr?retryWrites=true&w=majority',
-    {
-      useNewUrlParser: true,
-      useUnifiedTopology: true,
-      useCreateIndex: true,
-    }
-  )
-  .then(() => console.log('Connected to MongoDB...'))
-  .catch((err) => console.error('Could not connect to MongoDB....'));
 
 app.use(express.json());
 app.use('/api/users', users);
@@ -42,4 +31,8 @@ app.use('/api/comment', comment);
 app.use(error);
 
 const port = process.env.PORT || 3001;
-app.listen(port, () => console.log(`Listening on port ${port}...`));
+const server = app.listen(port, () =>
+  console.log(`Listening on port ${port}...`)
+);
+
+module.exports = server;
