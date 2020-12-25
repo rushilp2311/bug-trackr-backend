@@ -7,10 +7,10 @@ const router = express.Router();
 //Adding team
 router.post('/', async (req, res) => {
   let team = await Team.findOne({ id: req.body.id });
-  Team.findById;
   if (team) return res.status(400).send('Team already registered.');
   team = new Team(_.pick(req.body, ['id', 'name', 'bugs']));
   await team.save();
+  res.send(team);
 });
 
 //Getting the team through id
@@ -24,6 +24,13 @@ router.get('/:id', async (req, res) => {
 router.get('/', async (req, res) => {
   let allTeams = await Team.find();
   res.send(allTeams);
+});
+
+router.delete('/:id', async (req, res) => {
+  let allTeam = await Team.deleteOne({ id: +req.params.id });
+  if (!allTeam) return res.status(400).send(error.details[0].message);
+
+  res.send('Team Deleted').status(200);
 });
 
 module.exports = router;
