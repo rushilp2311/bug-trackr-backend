@@ -20,4 +20,10 @@ router.get('/:id', async (req, res) => {
   res.send(_.pick(team, ['id', 'name', 'bugs']));
 });
 
+//Get all the teams
+router.get('/', async (req, res) => {
+  let allTeams = await Team.find();
+  res.send(allTeams);
+});
+
 module.exports = router;

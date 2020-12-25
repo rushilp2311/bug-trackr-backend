@@ -1,4 +1,4 @@
-require('express-async-errors');
+// require('express-async-errors');
 const config = require('config');
 require('./startup/db')();
 const Joi = require('joi');
