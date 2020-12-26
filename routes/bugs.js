@@ -16,6 +16,8 @@ router.post('/', async (req, res) => {
     isOpen: req.body.isOpen,
   };
   team.bugs.push(bug);
+  const io = req.app.locals.io;
+  io.emit('add bug', team);
   await team.save();
   res.send(team);
 });
@@ -28,7 +30,14 @@ router.delete('/', async (req, res) => {
       break;
     }
   }
+
   await team.save();
+  const io = req.app.locals.io;
+  io.on('connection', (socket) => {
+    socket.on('delete bug', (msg) => {
+      io.emit('delete bug', { message: msg, team: team });
+    });
+  });
   res.send(team);
 });
 
@@ -36,7 +45,12 @@ router.post('/changeBugStatus', async (req, res) => {
   let team = await Team.findOne({ id: req.body.teamid });
   let currentBug = team.bugs.find((obj) => obj._id == req.body.bugid);
   currentBug.isOpen = !currentBug.isOpen;
+  const io = req.app.locals.io;
+
+  io.emit('bug', currentBug);
+
   team.save();
+
   res.send(team);
 });
 
