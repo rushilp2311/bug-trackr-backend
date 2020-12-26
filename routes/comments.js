@@ -15,7 +15,8 @@ router.post('/', async (req, res) => {
   let currentBug = team.bugs.find((obj) => obj._id == req.body.bugid);
   currentBug.comments = [...currentBug.comments, comment];
   team.save();
-
+  const io = req.app.locals.io;
+  io.emit('comment', currentBug);
   res.send(team);
 });
 
@@ -30,7 +31,9 @@ router.delete('/', async (req, res) => {
       break;
     }
   }
+  const io = req.app.locals.io;
   team.save();
+  io.emit('comment', currentBug);
   res.send(team);
 });
 

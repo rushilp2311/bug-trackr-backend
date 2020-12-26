@@ -2,7 +2,7 @@
 const config = require('config');
 require('./startup/db')();
 const Joi = require('joi');
-const mongoose = require('mongoose');
+const socketIo = require('socket.io');
 const users = require('./routes/users');
 const auth = require('./routes/auth');
 const team = require('./routes/teams');
@@ -34,5 +34,13 @@ const port = process.env.PORT || 3001;
 const server = app.listen(port, () =>
   console.log(`Listening on port ${port}...`)
 );
+
+const io = socketIo(server, {
+  cors: { origin: '*' },
+});
+io.on('connection', (socket) => {
+  socket.emit('outgoing', 'hello');
+});
+app.locals.io = io;
 
 module.exports = server;
