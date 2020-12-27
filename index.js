@@ -37,6 +37,7 @@ const server = app.listen(port, () =>
 
 const io = socketIo(server, {
   cors: { origin: '*' },
+  perMessageDeflate: false,
 });
 io.on('connection', (socket) => {
   socket.emit('outgoing', 'hello');

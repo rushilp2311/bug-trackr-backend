@@ -47,7 +47,7 @@ router.post('/changeBugStatus', async (req, res) => {
   currentBug.isOpen = !currentBug.isOpen;
   const io = req.app.locals.io;
 
-  io.emit('bug', currentBug);
+  io.emit('bug', { bug: currentBug, team: team });
 
   team.save();
 

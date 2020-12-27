@@ -16,7 +16,7 @@ router.post('/', async (req, res) => {
   currentBug.comments = [...currentBug.comments, comment];
   team.save();
   const io = req.app.locals.io;
-  io.emit('comment', currentBug);
+  io.emit('comment', { bug: currentBug, team: team });
   res.send(team);
 });
 
@@ -33,7 +33,7 @@ router.delete('/', async (req, res) => {
   }
   const io = req.app.locals.io;
   team.save();
-  io.emit('comment', currentBug);
+  io.emit('comment', { bug: currentBug, team: team });
   res.send(team);
 });
 
