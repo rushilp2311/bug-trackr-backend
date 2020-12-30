@@ -39,8 +39,16 @@ const io = socketIo(server, {
   cors: { origin: '*' },
   perMessageDeflate: false,
 });
+let clients = {};
 io.on('connection', (socket) => {
-  socket.emit('outgoing', 'hello');
+  socket.on('connection', function () {
+    clients[socket.id] = socket;
+    console.log('new client Connected');
+  });
+
+  socket.on('disconnect', function () {
+    delete clients[socket.id];
+  });
 });
 app.locals.io = io;
 
